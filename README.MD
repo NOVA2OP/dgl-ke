@@ -39,6 +39,9 @@ This repo contains configuration that can be used to train RotatE model using DG
    pip install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
    ```
    ```bash
+   pip install -e <path(...../dgl-ke/python)> //change this command acc to your current path ending with dgl-ke/python
+   ```
+   ```bash
    pip install pandas #if required
    ```
 
