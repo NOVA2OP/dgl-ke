@@ -39,9 +39,6 @@ This repo contains configuration that can be used to train RotatE model using DG
    pip install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
    ```
    ```bash
-   pip install -e <path(...../dgl-ke/python)> //change this command acc to your current path ending with dgl-ke/python
-   ```
-   ```bash
    pip install pandas #if required
    ```
 
@@ -89,8 +86,61 @@ This repo contains configuration that can be used to train RotatE model using DG
 
 12) Convert your entities.tsv and relations.tsv into json files and add them to the path where your model files are stored if they arent automatically created (reqd for model testing manually). Name them as entityid2name.json and relationid2name.json.
 
-13) To test your model manually, locate the dgl_predict.py file in path dgl-ke/python (edit head and relation for predictions) and run it using the command:
+13) To test your model manually, edit the dgl_predict.py file in dgl-ke/python (edit head and relation for predictions) and run it using command:
     ```bash
     python dgl_predict.py
     ```
- 
+
+## Model I trained (Specs):
+The model was trained using the following specifications or CLI code:
+   ```bash
+   Data files: 
+   1) entities.dict - 943582 entities
+   2) relations.dict - 10 relations
+   3) train.txt - 3232932 triples (0.8)
+   4) valid.txt - 359214 triples (0.1)
+   5) test.txt - 359214 triples (0.1)
+   ```
+
+   ```bash
+   $env:DGLBACKEND "pytorch"                                                                                       
+    dglke_train `
+    --model_name RotatE `
+    --data_path ../data/wikimedia `
+    --dataset wikimedia `
+    --format udd_hrt `
+    --data_files entities.dict relations.dict train.txt valid.txt test.txt `
+    --batch_size 128 `
+    --neg_sample_size 32 `
+    --batch_size_eval 64 `
+    --neg_sample_size_eval 16 `
+    --hidden_dim 256 `
+    --double_ent `
+    --gamma 12.0 `
+    --lr 0.01 `
+    --max_step 253000 `
+    --log_interval 10000 `
+    --eval_interval 253000 `
+    --save_path model_output/rotate_wikimedia `
+    --gpu 0 `
+    -adv -a 1.0 `
+    --valid `
+    --test `
+   ```
+
+ ## Stats of final model trained:
+
+ The model was trained successfully in 5396.262 seconds, validation takes 1850.543 seconds and testing takes 1910.88 seconds. Following are the stats after complete training:
+
+ ```bash
+Model Name: RotatE
+No. of Epochs: 10
+MRR: 0.9195858653627182
+MR: 1.8967920304704204
+HITS@1: 0.897
+HITS@3: 0.93
+HITS@10: 0.95
+Avg Loss: 0.18 
+Avf Pos Loss: 0.15
+Avg Neg Loss: 0.20 
+ ```
