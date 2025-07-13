@@ -89,8 +89,8 @@ This repo contains configuration that can be used to train RotatE model using DG
 
 12) Convert your entities.tsv and relations.tsv into json files and add them to the path where your model files are stored if they arent automatically created (reqd for model testing manually). Name them as entityid2name.json and relationid2name.json.
 
-13) To test your model manually, edit the manual_test.py file in dgl-ke/python (set dimensions used and edit head and relation for predictions) and run it using command:
+13) To test your model manually, locate the dgl_predict.py file in path dgl-ke/python (edit head and relation for predictions) and run it using the command:
     ```bash
-    python manual_test.py
+    python dgl_predict.py
     ```
  
